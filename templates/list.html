@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block subject %}
+{% if dict.type == 'group' %}
+<li class="nav-item"><a href="/subject" class="nav-link link-body-emphasis px-2 active" aria-current="page">Предметы</a></li>
+<li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2 active" aria-current="page">/</a></li>
+{% endif %}
+{% endblock %}
+
+{% block group %}{{ dict.group }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>{{ dict.name }}</h1>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    {% for i in list %}
+      <div class="feature col">
+          {% if dict.type == 'admin' %}
+          <h3 class="fs-2 text-body-emphasis">{{ i }}</h3>
+          {% else %}
+        <h3 class="fs-2 text-body-emphasis">{{ i.name }}</h3>
+          {% endif %}
+          {% if dict.type == 'group' %}
+        <a href="/subject/{{ dict.shortname }}/{{ i.shortname }}" class="icon-link">
+            {% elif dict.type == 'subject' %}
+            <a href="/{{ dict.type }}/{{ i.shortname }}" class="icon-link">
+            {% elif dict.type == 'admin' %}
+            <a href="/{{ dict.type }}/{{ i }}" class="icon-link">
+            {% endif %}
+          {{ dict.btn_name }}
+          <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

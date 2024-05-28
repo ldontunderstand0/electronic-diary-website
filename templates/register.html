@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block subject %}
+{% endblock %}
+{% block group %}
+{% endblock %}
+{% block nav %}
+{% endblock %}
+
+{% block body %}
+<main class="form-signin w-100 m-auto">
+    <h3>Регистрация</h3>
+    <form method="post">
+        {% for i in form %}
+        <div class="form-floating">
+        <input type="text" name="{{ i }}" id="{{ i }}" placeholder="{{ i }}" class="form-control">
+            <label for="{{ i }}">{{ i }}</label>
+    </div><br>
+        {% endfor %}
+        <input type="submit" class="btn btn-primary w-100 py-2" value="Зарегистрироваться">
+    </form><br>
+    <a href="/" class="icon-link">Войти</a>
+</main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block subject %}
+{% endblock %}
+{% block group %}
+{% endblock %}
+{% block body %}
+
+<div class="container mt-5">
+    <a href="/admin/{{ name }}/create" class="icon-link">Создать</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {% for i in form %}
+              <th scope="col">{{ i }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+    {% for i in list %}
+            <tr>
+                {% for j in i %}
+                <td>{{ j }}</td>
+                {% endfor %}
+                <td><a href="/admin/{{ name }}/update/{{ i.0 }}" class="icon-link">Изменить</a></td>
+                <td><a href="/admin/{{ name }}/delete/{{ i.0 }}" class="icon-link">Удалить</a></td>
+                {% if name == 'user' %}
+                <td><a href="/admin/{{ name }}/info/{{ i.0 }}" class="icon-link">Отправить данные аккаунта</a></td>
+                {% endif %}
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

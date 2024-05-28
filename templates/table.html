@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block group %}
+<li class="nav-item"><a href="/subject/{{dict.subject_name}}" class="nav-link link-body-emphasis px-2">Группы</a></li>
+<li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2 active" aria-current="page">/</a></li>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container mt-5">
+    <a href="/subject/{{ dict.subject_name }}/{{ group_name }}/info" class="icon-link">Получить список</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">ФИО</th>
+              <th scope="col">Процент посещения</th>
+              <th scope="col">Средний бал</th>
+                <th scope="col">Занятия:</th>
+                {% for i in lessions %}
+                <th scope="col">{{ i.date }}, {{ i.kind }}</th>
+                {% endfor %}
+              <th scope="col"><button onclick='window.dialog.showModal()'>Добавить занятие</button></th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for i in grades %}
+            <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.perc }}</td>
+                <td>{{ i.avg }}</td>
+                <td></td>
+                {% for j in i.grade %}
+                <td><button class="tbl btn" onclick='window.d{{ j.lession_id }}{{ j.user_id }}.showModal()'>{{ j.grade }}</button></td>
+                {% endfor %}
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% for i in grades %}
+        {% for j in i.grade %}
+            <dialog aria-labelledby="dialog-name" id="d{{ j.lession_id }}{{ j.user_id }}">
+                <form method="post">
+                    <input name="id" id="id" value="{{ j.lession_id }}_{{ j.user_id }}" style="visibility: hidden">
+                    <label><b>Редактирование</b></label><br>
+                    <div class="list-group">
+                        <label class="list-group-item d-flex gap-2">
+                            <input class="form-check-input flex-shrink-0" type="radio" name="listG" id="listG1" value="1" checked="">
+                            <span>Присутствовал</span>
+                        </label>
+                        <label class="list-group-item d-flex gap-2">
+                            <input class="form-check-input flex-shrink-0" type="radio" name="listG" id="listG2" value="0">
+                            <span>Отсутствовал</span>
+                        </label>
+                    </div>
+                    {% if j.is_grade %}
+                        <label><b>Выберите оценку</b></label><br>
+                        <div class="list-group">
+                            <label class="list-group-item d-flex gap-2">
+                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroup" id="listGroup1" value="2">
+                                <span>2</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroup" id="listGroup2" value="3">
+                                <span>3</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroup" id="listGroup3" value="4">
+                                <span>4</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroup" id="listGroup4" value="5">
+                                <span>5</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-2">
+                                <input class="form-check-input flex-shrink-0" type="radio" name="listGroup" id="listGroup5" value="0" checked="">
+                                <span>Отсутствовал</span>
+                            </label>
+                        </div>
+                    {%endif%}
+                    <input type="submit" onclick="window.d{{ j.lession_id }}{{ j.user_id }}.close()" class="btn" value="Подтвердить">
+                </form>
+                <button onclick="window.d{{ j.lession_id }}{{ j.user_id }}.close()" class="btn">Отмена</button>
+            </dialog>
+    {% endfor %}
+{% endfor %}
+<dialog aria-labelledby="dialog-name" id="dialog">
+    <form method="post" id="form1">
+        <label><b>Выберите вид занятия</b></label>
+        <div class="list-group">
+        <label class="list-group-item d-flex gap-2">
+          <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios1" value="Лекция" checked="">
+          <span>
+            Лекция
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios2" value="Практика">
+          <span>
+            Практика
+          </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+          <input class="form-check-input flex-shrink-0" type="radio" name="listGroupRadios" id="listGroupRadios3" value="Лабораторная работа">
+          <span>
+            Лабораторная работа
+          </span>
+        </label>
+      </div>
+        <label><b>Введите дату занятия</b></label><br>
+        <input type="text" onchange="addDescripts(this)" id="date" name="date" class="form-control"></input><br>
+        <input type="submit" onclick="window.dialog.close()" class="btn" value="Подтвердить">
+    </form>
+    <button onclick="window.dialog.close()" class="btn">Отмена</button>
+</dialog>
+
+{% endblock %}

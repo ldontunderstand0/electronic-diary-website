@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block subject %}
+{% endblock %}
+{% block group %}
+{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">Предмет</th>
+              <th scope="col">Средний бал</th>
+              <th scope="col">Процент посещения</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for i in results %}
+            <tr>
+                <td>{{ i.0 }}</td>
+                <td>{{ i.1 }}</td>
+                <td>{{ i.2 }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

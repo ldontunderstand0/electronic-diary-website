@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Изменить</h1>
+    <form method="post">
+        {% for i in form %}
+        <input type="text" name="{{ i.0 }}" id="{{ i.0 }}" value="{{ i.1 }}" placeholder="{{ i.0 }}" class="form-control"><br>
+        {% endfor %}
+        <input type="submit" class="btn btn-success" value="Изменить">
+    </form>
+</div>
+{% endblock %}
